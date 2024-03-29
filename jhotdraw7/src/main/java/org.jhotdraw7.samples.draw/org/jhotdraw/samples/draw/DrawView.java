@@ -7,13 +7,7 @@ import org.jhotdraw.app.AbstractView;
 import org.jhotdraw.app.ApplicationLabels;
 import org.jhotdraw.app.action.edit.RedoAction;
 import org.jhotdraw.app.action.edit.UndoAction;
-import org.jhotdraw.draw.DefaultDrawingEditor;
-import org.jhotdraw.draw.Drawing;
-import org.jhotdraw.draw.DrawingEditor;
-import org.jhotdraw.draw.ImageFigure;
-import org.jhotdraw.draw.QuadTreeDrawing;
-import org.jhotdraw.draw.TextAreaFigure;
-import org.jhotdraw.draw.TextFigure;
+import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.action.ButtonFactory;
 import org.jhotdraw.draw.io.DOMStorableInputOutputFormat;
 import org.jhotdraw.draw.io.ImageInputFormat;
@@ -75,9 +69,9 @@ public class DrawView extends AbstractView {
         
         scrollPane.setLayout(new PlacardScrollPaneLayout());
         scrollPane.setBorder(new EmptyBorder(0,0,0,0));
-        
-        setEditor(new DefaultDrawingEditor());
+
         undo = new UndoRedoManager();
+        setEditor(new DefaultDrawingEditor());
         view.setDrawing(createDrawing());
         view.getDrawing().addUndoableEditListener(undo);
         initActions();
@@ -208,6 +202,8 @@ public class DrawView extends AbstractView {
      * Sets a drawing editor for the view.
      */
     public void setEditor(DrawingEditor newValue) {
+        newValue.getActionMap().put(UndoAction.ID, undo.getUndoAction());
+        newValue.getActionMap().put(RedoAction.ID, undo.getRedoAction());
         if (editor != null) {
             editor.remove(view);
         }

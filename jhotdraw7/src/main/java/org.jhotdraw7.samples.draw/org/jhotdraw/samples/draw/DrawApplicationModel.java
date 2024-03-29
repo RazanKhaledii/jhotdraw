@@ -7,22 +7,7 @@ import org.jhotdraw.app.Application;
 import org.jhotdraw.app.ApplicationModel;
 import org.jhotdraw.app.DefaultApplicationModel;
 import org.jhotdraw.app.View;
-import org.jhotdraw.draw.AbstractAttributedFigure;
-import org.jhotdraw.draw.BezierFigure;
-import org.jhotdraw.draw.ConnectionFigure;
-import org.jhotdraw.draw.DefaultDrawingEditor;
-import org.jhotdraw.draw.DiamondFigure;
-import org.jhotdraw.draw.DrawLabels;
-import org.jhotdraw.draw.DrawingEditor;
-import org.jhotdraw.draw.EllipseFigure;
-import org.jhotdraw.draw.ImageFigure;
-import org.jhotdraw.draw.LineConnectionFigure;
-import org.jhotdraw.draw.LineFigure;
-import org.jhotdraw.draw.RectangleFigure;
-import org.jhotdraw.draw.RoundRectangleFigure;
-import org.jhotdraw.draw.TextAreaFigure;
-import org.jhotdraw.draw.TextFigure;
-import org.jhotdraw.draw.TriangleFigure;
+import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.action.ButtonFactory;
 import org.jhotdraw.draw.decoration.ArrowTip;
 import org.jhotdraw.draw.liner.CurvedLiner;
@@ -56,6 +41,7 @@ import static org.jhotdraw.draw.AttributeKeys.END_DECORATION;
  * @version $Id$
  */
 public class DrawApplicationModel extends DefaultApplicationModel {
+    private List<JToolBar> list;
     private static final long serialVersionUID = 1L;
 
     /**
@@ -65,6 +51,7 @@ public class DrawApplicationModel extends DefaultApplicationModel {
 
     /** Creates a new instance. */
     public DrawApplicationModel() {
+        list = new LinkedList<>();
     }
 
     public DefaultDrawingEditor getSharedEditor() {
@@ -72,6 +59,10 @@ public class DrawApplicationModel extends DefaultApplicationModel {
             sharedEditor = new DefaultDrawingEditor();
         }
         return sharedEditor;
+    }
+
+    public List<JToolBar> getToolBars() {
+        return list;
     }
 
     @Override
@@ -98,7 +89,6 @@ public class DrawApplicationModel extends DefaultApplicationModel {
             editor = p.getEditor();
         }
 
-        LinkedList<JToolBar> list = new LinkedList<JToolBar>();
         JToolBar tb;
         tb = new JToolBar();
         addCreationButtonsTo(tb, editor);

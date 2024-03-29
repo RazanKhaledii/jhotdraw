@@ -36,7 +36,6 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.util.LinkedList;
-import java.util.ResourceBundle;
 
 /**
  * Provides a view on a Pert drawing.
